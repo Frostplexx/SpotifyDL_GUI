@@ -37,6 +37,11 @@ stop
 
 :downsp
 pip3 install spotify_dl
+cls
+for /F "tokens=2 delims==" %%a in ('findstr /I "Secret=" options.txt') do set "Secret=%%a"
+SET SPOTIPY_CLIENT_ID=%Secret%
+for /F "tokens=2 delims==" %%a in ('findstr /I "ID=" options.txt') do set "ID=%%a"
+SET SPOTIPY_CLIENT_SECRET=%ID%
 goto check
 :downffmpeg
 powershell -Command "Invoke-WebRequest https://www.gyan.dev/ffmpeg/builds/ffmpeg-release-essentials.7z -OutFile ffmpeg.zip"
