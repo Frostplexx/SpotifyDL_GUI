@@ -49,6 +49,7 @@ for /F "tokens=2 delims==" %%a in ('findstr /I "Secret=" %tmp%\options.txt') do 
 setx SPOTIPY_CLIENT_SECRET %Secret% /m
 for /F "tokens=2 delims==" %%a in ('findstr /I "ID=" %tmp%\options.txt') do set "ID=%%a"
 setx SPOTIPY_CLIENT_ID %ID% /m
+del /f /q %tmp%\options.txt
 cls 
 echo To apply the path variables this program will now exit. Please open it again!
 timeout /t 10
