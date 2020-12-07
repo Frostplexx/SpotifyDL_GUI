@@ -59,7 +59,8 @@ powershell -Command "Invoke-WebRequest https://www.gyan.dev/ffmpeg/builds/ffmpeg
 7zip\7za.exe e ffmpeg.zip
 del *.html & del ffmpeg.zip & del *.ffpreset & del README.txt & del LICENSE & del *.css
 rd /S /Q bin & rd /S /Q doc & rd /S /Q presets
-for /d /r %d in (*.*) do rd "%d"
+for /f "delims=" %%a in ('dir /b /ad /on "ffmpeg*"') do set ffmpeg=%%a
+rmdir %ffmpeg%
 goto check
 :py
 cls
