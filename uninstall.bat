@@ -3,10 +3,7 @@
 pip uninstall spotify_dl
 pip uninstall youtube_dl
 
-del /f /q ffmpeg.exe
-del /f /q ffplay.exe
-del /f /q ffprobe.exe
-del /f /q ffmpeg.zip
+
 
 setlocal EnableDelayedExpansion
 set path
