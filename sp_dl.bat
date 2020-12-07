@@ -42,12 +42,14 @@ IF ERRORLEVEL 1 cls & GOTO restart
 
 
 :downsp
+copy options.txt %tmp%/options.txt
+if not "%1"=="am_admin" (powershell start -verb runas '%0' am_admin & exit /b)
 pip3 install spotify_dl
 cls
-for /F "tokens=2 delims==" %%a in ('findstr /I "Secret=" options.txt') do set "Secret=%%a"
-SET SPOTIPY_CLIENT_ID=%Secret%
-for /F "tokens=2 delims==" %%a in ('findstr /I "ID=" options.txt') do set "ID=%%a"
-SET SPOTIPY_CLIENT_SECRET=%ID%
+for /F "tokens=2 delims==" %%a in ('findstr /I "Secret=" %tmp%/options.txt') do set "Secret=%%a"
+setx SPOTIPY_CLIENT_ID %Secret% /m
+for /F "tokens=2 delims==" %%a in ('findstr /I "ID=" %tmp%/options.txt') do set "ID=%%a"
+setx SPOTIPY_CLIENT_SECRET %ID% /m
 cls 
 echo To apply the path variables this program will now exit. Please open it again!
 timeout /t 10
