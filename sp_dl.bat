@@ -3,7 +3,7 @@
 title Spotify_dl
 :check
 pip3 -h
-if %ERRORLEVEL% NEQ 0 (goto py) else cls
+if %ERRORLEVEL% NEQ 0 (goto downpy) else cls
 spotify_dl -h
 if %ERRORLEVEL% NEQ 0 (goto downsp) else cls
 ffmpeg -h
@@ -18,13 +18,12 @@ if %ERRORLEVEL% NEQ 0 (cls & goto downffmpeg) else cls
 ::: |_____/| .__/ \___/ \__|_|_|  \__, |_____/|______| \_____|\____/|_____|
 :::        | |                     __/ |           ______                  
 :::        |_|                    |___/           |______|                 
-for /f "delims=: tokens=*" %%A in ('findstr /b ::: "%~f0"') do @echo(%%A
+for /f "delims=: tokens=*" %%A in ('findstr /b ::: "%~f0"') do @echo(%%A)
 echo.
 echo.
 
 set /p link=" Playlist link: " link:
-For /F "Tokens=1 Delims=" %%I In ('cscript //nologo BrowseFolder.vbs') Do Set _FolderName=%%I
-set downpath=%_foldername% 
+For /F "Tokens=1 Delims=" %%I In ('cscript //nologo BrowseFolder.vbs') do set downpath=%%I
 
 spotify_dl -l %link% -o %downpath%
 
@@ -65,9 +64,12 @@ for /f "delims=" %%a in ('dir /b /ad /on "ffmpeg*"') do set ffmpeg=%%a
 rmdir %ffmpeg%
 goto check
 
-:py
+:downpy
 cls
-echo PLEASE DOWNLOAD PYTHON FROM: https://python.org/
-pause
-
+	if NOT exist python.exe (
+		echo downloading python...
+		powershell -Command "Invoke-WebRequest https://www.python.org/ftp/python/3.9.0/python-3.9.0-amd64.exe -OutFile python.exe"
+	)
+	start python.exe
+	pause
 goto check
