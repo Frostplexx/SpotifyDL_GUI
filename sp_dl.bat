@@ -34,11 +34,8 @@ ECHO.
 CHOICE /C 12 /M "Enter your choice:"
 
 :: Note - list ERRORLEVELS in decreasing order
-IF ERRORLEVEL 2 GOTO stop
+IF ERRORLEVEL 2 GOTO EOF
 IF ERRORLEVEL 1 cls & GOTO restart
-
-:stop
-stop
 
 
 :downsp
