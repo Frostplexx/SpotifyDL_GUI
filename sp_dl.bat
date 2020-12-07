@@ -62,9 +62,9 @@ rd /S /Q bin & rd /S /Q doc & rd /S /Q presets
 for /f "delims=" %%a in ('dir /b /ad /on "ffmpeg*"') do set ffmpeg=%%a
 rmdir %ffmpeg%
 goto check
+
 :py
 cls
-powershell -Command "Invoke-WebRequest https://www.gyan.dev/ffmpeg/builds/ffmpeg-release-essentials.7z -OutFile ffmpeg.zip"
 echo PLEASE DOWNLOAD PYTHON FROM: https://python.org/
 pause
 
