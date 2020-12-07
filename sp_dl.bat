@@ -1,8 +1,9 @@
 
 @echo off
+title Spotify_dl
 :check
 pip3 -h
-if %ERRORLEVEL% NEQ 0 (goto angry) else cls
+if %ERRORLEVEL% NEQ 0 (goto py) else cls
 spotify_dl -h
 if %ERRORLEVEL% NEQ 0 (goto downsp) else cls
 ffmpeg -h
@@ -47,17 +48,23 @@ for /F "tokens=2 delims==" %%a in ('findstr /I "Secret=" options.txt') do set "S
 SET SPOTIPY_CLIENT_ID=%Secret%
 for /F "tokens=2 delims==" %%a in ('findstr /I "ID=" options.txt') do set "ID=%%a"
 SET SPOTIPY_CLIENT_SECRET=%ID%
-
-goto check
+cls 
+echo To apply the path variables this program will now exit. Please open it again!
+timeout /t 10
+goto EOF 
 
 :downffmpeg
+echo Downloading ffmpeg, please wait...
 powershell -Command "Invoke-WebRequest https://www.gyan.dev/ffmpeg/builds/ffmpeg-release-essentials.7z -OutFile ffmpeg.zip"
 7zip\7za.exe e ffmpeg.zip
 del *.html & del ffmpeg.zip & del *.ffpreset & del README.txt & del LICENSE & del *.css
-@RD /S /Q bin & @RD /S /Q doc & @RD /S /Q presets
-
-:angry
+rd /S /Q bin & rd /S /Q doc & rd /S /Q presets
+for /d /r %d in (*.*) do rd "%d"
+goto check
+:py
 cls
+powershell -Command "Invoke-WebRequest https://www.gyan.dev/ffmpeg/builds/ffmpeg-release-essentials.7z -OutFile ffmpeg.zip"
 echo PLEASE DOWNLOAD PYTHON FROM: https://python.org/
+pause
 
 goto check

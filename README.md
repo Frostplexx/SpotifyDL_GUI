@@ -7,5 +7,4 @@
 
 ###### Usage: 
 You need to provide your own Client Secret and ID by going to https://developer.spotify.com/dashboard/applications
-and creating a new App. After that paste it into options.txt
-Now you can run sp_dl.bat.
+and creating a new App. After that paste it into options.txt and run sp_dl.bat.
