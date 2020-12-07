@@ -1,6 +1,8 @@
 
 @echo off
 :check
+pip3 -h
+if %ERRORLEVEL% NEQ 0 (goto angry) else cls
 spotify_dl -h
 if %ERRORLEVEL% NEQ 0 (goto downsp) else cls
 ffmpeg -h
@@ -53,5 +55,9 @@ powershell -Command "Invoke-WebRequest https://www.gyan.dev/ffmpeg/builds/ffmpeg
 7zip\7za.exe e ffmpeg.zip
 del *.html & del ffmpeg.zip & del *.ffpreset & del README.txt & del LICENSE & del *.css
 @RD /S /Q bin & @RD /S /Q doc & @RD /S /Q presets
+
+:angry
+cls
+echo PLEASE DOWNLOAD PYTHON FROM: https://python.org/
 
 goto check
