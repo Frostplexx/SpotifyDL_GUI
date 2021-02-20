@@ -8,20 +8,18 @@ title Spotify_dl
 	if %ERRORLEVEL% NEQ 0 (goto downsp) else cls
 	ffmpeg -h
 	if %ERRORLEVEL% NEQ 0 (cls & goto downffmpeg) else cls
-
 :restart
-	:::   _____             _   _  __       _____  _        _____ _    _ _____ 
-	:::  / ____|           | | (_)/ _|     |  __ \| |      / ____| |  | |_   _|
-	::: | (___  _ __   ___ | |_ _| |_ _   _| |  | | |     | |  __| |  | | | |  
-	:::  \___ \| '_ \ / _ \| __| |  _| | | | |  | | |     | | |_ | |  | | | |  
-	:::  ____) | |_) | (_) | |_| | | | |_| | |__| | |____ | |__| | |__| |_| |_ 
-	::: |_____/| .__/ \___/ \__|_|_|  \__, |_____/|______| \_____|\____/|_____|
-	:::        | |                     __/ |           ______                  
-	:::        |_|                    |___/           |______|                 
-	for /f "delims=: tokens=*" %%A in ('findstr /b ::: "%~f0"') do @echo(%%A
-	echo.
-	echo.
+	echo   _____             _   _  __       _____  _        _____ _    _ _____ 
+	echo  ^/ ____^|           ^| ^| (_^)^/ _^|     ^|  __ \^| ^|      / ____^| ^|  ^| ^|_   _^|
+	echo ^| (___  _ __   ___ ^| ^|_ _^| ^|_ _   _^| ^|  ^| ^| ^|     ^| ^|  __^| ^|  ^| ^| ^| ^|  
+	echo  ^\___ \^| '_ ^\ ^/ _ \^| __^| ^|  _^| ^| ^| ^| ^|  ^| ^| ^|     ^| ^| ^|_ ^| ^|  ^| ^| ^| ^|  
+	echo  ____^) ^| ^|_^) ^| ^(_^) ^| ^|_^| ^| ^| ^| ^|_^| ^| ^|__^| ^| ^|____ ^| ^|__^| ^| ^|__^| ^|_^| ^|_ 
+	echo ^|_____/^| .__^/ ^\___/ \__^|_^|_^|  \__, ^|_____/^|______^| \_____^|\____/^|_____^|
+	echo        ^| ^|                     __/ ^|           ______                  
+	echo        ^|_^|                    ^|___/           ^|______^|  
 
+	echo. 
+	echo.
 	set /p link=" Playlist/Song link: " link:
 	For /F "Tokens=1 Delims=" %%I In ('cscript //nologo BrowseFolder.vbs') do set downpath=%%I
 
@@ -29,13 +27,15 @@ title Spotify_dl
 
 	ECHO.
 	ECHO.
-	ECHO 1.Download another one
-	ECHO 2.Quit
+	ECHO 1. Download another one
+	ECHO 2. Quit
+	ECHO 3. Convert files to .ogg
 	ECHO.
 
-	CHOICE /C 12 /M "Enter your choice:"
+	CHOICE /C 123 /M "Enter your choice:"
 
 	:: Note - list ERRORLEVELS in decreasing order
+	IF ERRORLEVEL 3 cls & GOTO converter
 	IF ERRORLEVEL 2 GOTO EOF
 	IF ERRORLEVEL 1 cls & GOTO restart
 
@@ -65,11 +65,20 @@ title Spotify_dl
 	goto check
 
 :downpy
-cls
+	cls
 	if NOT exist python.exe (
 		echo downloading python...
 		powershell -Command "Invoke-WebRequest https://www.python.org/ftp/python/3.9.0/python-3.9.0-amd64.exe -OutFile python.exe"
 	)
 	start python.exe
 	pause
-goto check
+	goto check
+
+:converter
+	for /F "Tokens=1 Delims=" %%I In ('cscript //nologo BrowseFolder.vbs') do set downpath=%%I
+	for %%a in ("%downpath%\*.mp3") do ffmpeg -i "%%a" "%downpath%\%%~na.ogg"
+	for %%a in ("%downpath%\*.mp3") do del "%%~a"
+	echo Finished!
+	timeout /t 2
+	cls
+	goto restart
