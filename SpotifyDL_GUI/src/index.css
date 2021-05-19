@@ -1,0 +1,96 @@
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  margin: 5px;
+  padding: 10px;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+#tabs{
+  padding-left: 20px;
+  padding-right: 20px;
+
+}
+
+#mainbody{
+  float: left;
+  width: 50%;
+}
+
+#output{
+  float: right;
+  width: 47%;
+  padding-top: 5px;
+  padding-right: 10px;
+
+}
+
+#outtext{
+  text-overflow: clip;
+  height: 23rem;
+  white-space: normal;
+  overflow: scroll;
+  background-color: rgb(70, 70, 70);
+  color:white;
+  line-break: normal;
+  white-space: pre-line;
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+#loading{
+  position: absolute;
+  bottom: 1%;
+  width: 95%;
+  margin: none;
+  display: none;
+}
+
+#clearBtn{
+  float: right;
+  margin: 10px;
+  margin-top: 20px;
+}
+
+ .tabs:not(:last-child) {
+  margin-bottom: 0;
+}
+
+.tabcontent {
+  padding: 1rem;
+  display: none;
+}
+
+.tabcontent.is-active {
+  display: block;
+}
+
+#msg {
+  padding: 1rem;
+  display: none;
+}
+
+#msg.is-active{
+  display: block;
+}
+
+#settingsmenu{
+  float: left;
+  width: 20%;
+}
+
+#settingsContainer{
+  float: right;
+  width: 75%;
+  padding-right: 5%;
+}
+
+.settingsContent{
+  display: none;
+}
+
+.settingsContent.is-active{
+  display: block;
+}
